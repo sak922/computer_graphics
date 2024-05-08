@@ -1,0 +1,130 @@
+//Bresenhams line drawing algorithm
+#include<GL/glut.h>
+#include<iostream>
+#include<stdlib.h>
+using namespace std;
+int x1,x2,y1,y2;
+void simpleline();
+void Dashedline(); 
+void Dottedline();
+float dy,dx,e,i,x,y;
+void display()
+{
+cout<<"\nSimple Line\n";
+simpleline();
+cout<<"\nDashed Line\n";
+Dashedline();
+cout<<"\nDotted Line\n";
+Dottedline();
+}
+void simpleline ()
+{
+cout<<"Enter the value of x1,y1:";
+cin>>x1>>y1;
+cout<<"Enter the value of x2,y2:";
+cin>>x2>>y2;
+dx=x2-x1;
+dy=y2-y1;
+e = 2*dy - dx;
+x=x1;
+y=y1;
+glClear (GL_COLOR_BUFFER_BIT);
+glColor3f (0.0, 1.0, 0.0);
+glBegin(GL_POINTS);
+glVertex2i(x,y);
+int i;
+for(i=0;i<dx;i++)
+{
+if(e>0)
+{
+y = y+1;
+e=e-2*dx;
+}
+x = x+1;
+e=e+2*dy;
+glVertex2i(x,y);
+}
+glEnd();
+glFlush();
+}
+void Dottedline ()
+{
+cout<<"Enter the value of x1,y1:";
+cin>>x1>>y1;
+cout<<"Enter the value of x2,y2:";
+cin>>x2>>y2;
+dx=x2-x1;
+dy=y2-y1;
+e = 2*dy - dx;
+x=x1;
+y=y1;
+glClear (GL_COLOR_BUFFER_BIT);
+glColor3f (0.0, 1.0, 0.0);
+glBegin(GL_POINTS);
+glVertex2i(x,y);
+int i;
+for(i=0;i<dx;i++)
+{
+if(e>0)
+{
+y = y+1;
+e=e-2*dx;
+}
+x = x+1;
+e=e+2*dy;
+if(i%2==0)
+glVertex2i(x,y);
+}
+glEnd();
+glFlush();
+}
+void Dashedline ()
+{
+cout<<"Enter the value of x1,y1:";
+cin>>x1>>y1;
+cout<<"Enter the value of x2,y2:";
+cin>>x2>>y2;
+dx=x2-x1;
+dy=y2-y1;
+e = 2*dy - dx;
+x=x1;
+y=y1;
+glClear (GL_COLOR_BUFFER_BIT);
+glColor3f (0.0, 1.0, 0.0);
+glBegin(GL_POINTS);
+glVertex2i(x,y);
+int i;
+for(i=0;i<dx;i++)
+{
+if(e>0)
+{
+y = y+1;
+e=e-2*dx;
+}
+x = x+1;
+e=e+2*dy;
+if(i%5==0)
+glVertex2i(x,y);
+}
+glEnd();
+glFlush();
+}
+void init(void)
+{
+glClearColor (0.0, 0.0, 0.0, 0.0);
+glMatrixMode(GL_PROJECTION);
+glLoadIdentity();
+gluOrtho2D(-100.0, 100.0, -100.0, 100.0);
+}
+int main(int argc, char** argv)
+{
+glutInit(&argc, argv);
+glutInitDisplayMode (GLUT_SINGLE | GLUT_RGB);
+glutInitWindowSize (500, 500);
+glutInitWindowPosition (100, 100);
+glutCreateWindow ("Breshanman Line Algorithm ");
+init ();
+glutDisplayFunc(display);
+glutMainLoop();
+return 0;
+}
